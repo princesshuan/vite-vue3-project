@@ -1,17 +1,18 @@
 <template>
   <menu-logo></menu-logo>
 
-  <el-menu router :default-active="activeIndex" unique-opened background-color="#304l56" text-color="#fff" class="el-menu-vertical-demo" :collapse="isCollapse">
+  <el-menu router :default-active="activeIndex" unique-opened background-color="#304l56" text-color="#fff" class="el-menu-vertical-demo" :collapse="isCollapse" @select="handleSelect">
     <menu-item :menuList="menuList"></menu-item>
   </el-menu>
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, computed } from "vue"
+  import { ref, reactive, computed, onMounted} from "vue"
   import MenuItem from './MenuItem.vue'
   import MenuLogo from './MenuLogo.vue'
   import { useRoute } from 'vue-router'
   import { useStore } from '@/store'
+  import { getRouter } from '../../http/api.ts'
   const store = useStore()
   //setup 语法糖中 定义的数据和方法可以直接在模板中使用 无需return
   const route = useRoute()
@@ -78,14 +79,14 @@
           }
         },
         {
-          path: '/authorityList',
-          component: '/system/authorityList/authorityList',
+          path: '/menuList',
+          component: '/system/MenuList/MenuList',
           alawyShow: false,
-          name: 'authorityList',
+          name: 'menuList',
           meta: {
             title: '权限管理',
             icon: 'document',
-            roles: ['sys:authority'],
+            roles: ['sys:menuList'],
             parentId: 17
           }
         }

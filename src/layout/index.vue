@@ -8,7 +8,8 @@
         <Header></Header>
       </el-header>
       <el-main class="main">
-        <router-view></router-view>
+        <tabs-bar></tabs-bar>
+          <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -18,6 +19,7 @@
   //在setup语法糖中，引入的组件可以直接使用，无需通过components进行注册
   import Header from './header/Header.vue';
   import MenuBar from './menu/MenuBar.vue';
+  import TabsBar from './main/Tabs.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -38,11 +40,12 @@
       border-bottom: 1px solid #e5e5e5;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
     }
 
     .main {
       // background-color: darkgray;
+      padding-top:0px;
     }
 
   }

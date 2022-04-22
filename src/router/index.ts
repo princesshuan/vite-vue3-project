@@ -1,6 +1,6 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
 import Layout from '@/layout/index.vue'
-
+import { getRouter } from "../http/api"
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -17,6 +17,14 @@ const routes: Array<RouteRecordRaw> = [
                 }
             }
         ]
+    },
+    {
+        path: '/login',
+        component: () => import('@/components/Login.vue'),
+        name: 'login',
+        meta: {
+            title: '登录'
+        }
     },
     {
         path: '/system',
@@ -37,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
         },
         {
             path: '/userList',
-            component: () => import('@/views/system/user/userList.vue'),
+            component: () => import('@/views/system/User/UserList.vue'),
             name: 'userList',
             meta: {
                 title: '用户管理',
@@ -46,7 +54,7 @@ const routes: Array<RouteRecordRaw> = [
         },
         {
             path: '/roleList',
-            component: () => import('@/views/system/role/roleList.vue'),
+            component: () => import('@/views/system/Role/RoleList.vue'),
             name: 'roleList',
             meta: {
                 title: '角色管理',
@@ -56,13 +64,13 @@ const routes: Array<RouteRecordRaw> = [
             }
         },
         {
-            path: '/authorityList',
-            component: () => import('@/views/system/authority/authorityList.vue'),
+            path: '/menuList',
+            component: () => import('@/views/system/Menu/MenuList.vue'),
             name: 'authorityList',
             meta: {
                 title: '权限管理',
                 icon: 'document',
-                roles: ['sys:authority'],
+                roles: ['sys:MenuList'],
                 parentId: 17
             }
         }
@@ -143,5 +151,56 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+//路由拦截
+router.beforeEach(async (to) => {
+    /* must call `next` */
+    //如果没登陆只能进入登录
+    const token: string | null = sessionStorage.getItem('token')
+    if (!token && to.path !== '/login') {
+        return '/login'
+    } else if (to.path !== '/login' && token) {
+        // console.log(router.getRoutes(), 'route')
+        // if (router.getRoutes().length == 3) {
+        //     //动态添加路由
+        //     let routerData: any = await getRouter()
+        //     console.log(routerData.data, "routerData")
+        //     routerData = routerData.data
 
+        //     routerData.forEach((item: any) => {
+        //         let children: RouteRecordRaw[] = []
+        //         if (item.children) {
+        //             item.children.forEach((data: any) => {
+        //                 children.push({
+        //                     path: data.path,
+        //                     component: () => import(/* webpackChunkName: "{request}" */ `../views${data.component}.vue`),
+        //                     name: item.name,
+        //                     meta: {
+        //                         title: data.meta.title,
+        //                         icon: data.meta.icon,
+        //                         roles: data.meta.roles
+        //                     }
+        //                 })
+        //             })
+        //         }
+        //         const routerObj: RouteRecordRaw = {
+        //             path: item.path,
+        //             component: Layout,
+        //             name: item.name,
+        //             meta: {
+        //                 title: item.meta.title,
+        //                 icon: item.meta.icon,
+        //                 roles: item.meta.roles
+        //             },
+        //             redirect: item.redirect,
+        //             children: children
+        //         }
+        //         console.log(routerObj, "routerObj")
+        //         router.addRoute(routerObj)
+        //     });
+            // router.replace(to.path)
+        // }
+    } else if (to.path === '/login' && token) {
+        return '/'
+    }
+});
 export default router
