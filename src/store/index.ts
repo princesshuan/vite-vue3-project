@@ -1,10 +1,12 @@
 import { InjectionKey } from 'vue'
+import { RouteRecordRaw } from 'vue-router'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import { TabInt } from './type'
+import { TabInt } from './type/index'
 export interface State {
     count: number,
     collapse: boolean,
-    tabsList: TabInt[]
+    tabsList: TabInt[],
+    menuList: any
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -13,7 +15,22 @@ export const store = createStore<State>({
     state: {
         count: 0,
         collapse: false,
-        tabsList: []
+        tabsList: [],
+        menuList: [
+            {
+                path: '/dashboard',
+                component: "Layout",
+                meta: {
+                    title: "首页",
+                    icon: "HomeFilled",
+                    roles: ["sys:manage"]
+                },
+                children: []
+            }
+        ]
+    },
+    actions: {
+        
     },
     mutations: {
         setCount(state: State, count: number) {
@@ -22,6 +39,11 @@ export const store = createStore<State>({
         setCollapse: (state: State, collapse: boolean) => {
             state.collapse = collapse
         },
+        setMenuList: (state: State, routes: Array<RouteRecordRaw>) => {
+            console.log(routes,'..');
+            
+            state.menuList = state.menuList.concat(routes)
+        },
         addTab: (state: State, tab: TabInt) => {
             if (state.tabsList.some(item => item.path === tab.path)) {
                 return
@@ -29,8 +51,9 @@ export const store = createStore<State>({
             state.tabsList.push(tab)
         },
         removeTab: (state: State, path: string) => {
-            state.tabsList = state.tabsList.filter(item=>item.path !== path)
-        }
+            state.tabsList = state.tabsList.filter(item => item.path !== path)
+        },
+        
     },
     getters: {
         getCount(state: State) {
@@ -41,6 +64,9 @@ export const store = createStore<State>({
         },
         getTabs(state: State) {
             return state.tabsList
+        },
+        getMenuList: (state: State) => {
+            return state.menuList;
         }
     }
 })

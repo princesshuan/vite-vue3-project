@@ -1,5 +1,5 @@
 # Vue3-Element-Plus-Ts-Vite2
-
+在线体验地址 http://test.ynitmk.cn/ 账户 admin 密码 1234
 ## Vite 需要node.js版本 >=12.0.0
 
 ## 创建项目
