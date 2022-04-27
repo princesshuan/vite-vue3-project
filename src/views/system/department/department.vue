@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
   import { onMounted, reactive, ref } from 'vue';
-  import { Delete, Edit, Search, Plus, Close } from '@element-plus/icons-vue'
+  import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
   import { getDeptList, saveDeptParent, deleteDeptParent, updateDeptParent } from '@/http/api'
   import { DeptModel, AddDeptModel } from './type/department'
   import AddAndEditVue from './AddAndEdit.vue';

@@ -9,7 +9,7 @@
       </el-header>
       <el-main class="main">
         <tabs-bar></tabs-bar>
-          <router-view></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -36,7 +36,7 @@
 
     .header {
       // background-color: aqua;
-      height:50px;
+      height: 50px;
       border-bottom: 1px solid #e5e5e5;
       display: flex;
       align-items: center;
@@ -45,7 +45,9 @@
 
     .main {
       // background-color: darkgray;
-      padding-top:0px;
+      padding-top: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
     }
 
   }
