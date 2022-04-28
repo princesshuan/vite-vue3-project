@@ -65,7 +65,7 @@
   const deleteBtn = (id: number) => {
     ElMessageBox.confirm(
         '确认删除该部门吗?',
-        'Warning', {
+        '系统提示', {
           confirmButtonText: '确认',
           cancelButtonText: '取消',
           type: 'warning',

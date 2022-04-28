@@ -7,12 +7,12 @@ import 'element-plus/dist/index.css'
 import * as ElIcons from '@element-plus/icons'
 //echarts
 import * as echarts from 'echarts'
+import locale from "element-plus/lib/locale/lang/zh-cn";
 
 
 
 var app = createApp(App)
-app.use(ElementPlus)
-
+app.use(ElementPlus, { locale });
 app.config.globalProperties.$echarts = echarts;
 
 for (const name in ElIcons) {

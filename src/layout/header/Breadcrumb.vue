@@ -22,10 +22,7 @@ const getBreadcurm = () => {
   tabs.value = matched;
 };
 getBreadcurm();
-watch(
-  () => route.path,
-  () => getBreadcurm()
-);
+watch(() => route.path,() => getBreadcurm());
 </script>
 
 <style scoped></style>
