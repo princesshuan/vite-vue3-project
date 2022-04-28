@@ -11,10 +11,10 @@
         <el-form-item label="电话" prop="mobile">
           <el-input v-model="dialogModel.mobile" />
         </el-form-item>
-        <el-form-item label="昵称">
+        <el-form-item label="昵称" prop="nickName">
           <el-input v-model="dialogModel.nickName" />
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-input v-model="dialogModel.email" />
         </el-form-item>
         <el-form-item label="登录名" prop="loginName">
@@ -22,8 +22,8 @@
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-radio-group v-model="dialogModel.sex">
-            <el-radio label="男">男</el-radio>
-            <el-radio label="女">女</el-radio>
+            <el-radio label="0">男</el-radio>
+            <el-radio label="1">女</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -33,23 +33,23 @@
 </template>
 <script setup lang='ts'>
   import SysDialog from '@/components/SysDialog.vue';
-  import { FormRules } from 'element-plus';
+  import { ElForm, FormRules } from 'element-plus';
   import { reactive, ref } from 'vue';
   import { DialogModel } from '../department/type/department';
   import { AddUserModel } from './type/user';
   import TreeDep from '../department/TreeDep.vue'
   //表单验证
-  const formRef = ref(null);
+  const formRef = ref < InstanceType < typeof ElForm >> ();
   const rules = reactive < FormRules > ({
     deptName: [{
       required: true,
       message: '请选择所属部门',
-      trigger: 'change'
+      trigger: ['blur', 'change']
     }],
     username: { required: true, message: '请输入名称', trigger: 'blur' },
     mobile: { required: true, message: '请输入电话', trigger: 'blur' },
     loginName: { required: true, message: '请输入登录名', trigger: 'blur' },
-    sex: { required: true, message: '请选择性别', trigger: 'change' },
+    sex: { required: true, message: '请选择性别', trigger: ['blur', 'change'] },
   })
 
   //表单绑定的数据
@@ -76,7 +76,19 @@
   //弹框取消
   const onClose = () => {
     dialog.visible = false;
-    formRef.value.resetFields()
+    dialogModel.value = {
+      type: '',
+      id: '',
+      deptId: '',
+      deptName: '',
+      email: '',
+      loginName: '',
+      mobile: '',
+      nickName: '',
+      password: '',
+      username: '',
+      sex: ''
+    }
   }
 
   //弹框显示
@@ -109,8 +121,8 @@
   //父组件调用子组件展示弹框
   const show = (row: { type: string, data: AddUserModel }) => {
     //显示弹框
-    console.log(row, 'row')
     onShow();
+    formRef.value?.clearValidate();
     //设置弹框的标题
     if (row.type == '编辑') {
       dialog.title = '编辑'

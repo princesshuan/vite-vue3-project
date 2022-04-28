@@ -40,7 +40,7 @@
     parentName: [{
       required: true,
       message: '请选择上级部门',
-      trigger: 'change'
+      trigger: ['blur', 'change'],
     }],
     name: { required: true, message: '请输入部门名称', trigger: 'blur' }
   })
@@ -69,7 +69,19 @@
   //弹框取消
   const onClose = () => {
     dialog.visible = false;
-    formRef.value.resetFields()
+    dialogModel.value = {
+      type: "",
+      id: "",
+      pid: "",
+      parentName: "",
+      manager: "",
+      deptAddress: "",
+      deptPhone: "",
+      name: "",
+      deptCode: "",
+      orderNum: ""
+    }
+    formRef.value?.clearValidate();
   }
 
   //弹框显示
@@ -102,22 +114,22 @@
   //父组件调用子组件展示弹框
   const show = (row: { type: string, data: AddDeptModel }) => {
     //显示弹框
-    console.log(row,'row')
     onShow();
+    formRef.value?.clearValidate();
     //设置弹框的标题
     if (row.type == '编辑') {
       dialog.title = '编辑'
       dialogModel.value = {
         type: row.type,
-         id: row.data.id,
-         pid: row.data.pid,
-         parentName: row.data.parentName,
-         manager: row.data.manager,
-         deptAddress: row.data.deptAddress,
-         deptPhone: row.data.deptPhone,
-         name: row.data.name,
-         deptCode: row.data.deptCode,
-         orderNum: row.data.orderNum
+        id: row.data.id,
+        pid: row.data.pid,
+        parentName: row.data.parentName,
+        manager: row.data.manager,
+        deptAddress: row.data.deptAddress,
+        deptPhone: row.data.deptPhone,
+        name: row.data.name,
+        deptCode: row.data.deptCode,
+        orderNum: row.data.orderNum
       }
     } else {
       dialog.title = '新增'

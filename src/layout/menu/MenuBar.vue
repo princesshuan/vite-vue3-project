@@ -32,19 +32,19 @@ const activeIndex = computed(() => {
 //菜单数据动态获取
 let menuList: any = ref([]);
 onMounted(async () => {
-  let routerData: any = await getMenuList();
-  menuList.value = [
-    {
-      path: "/dashboard",
-      component: "Layout",
-      meta: {
-        title: "首页",
-        icon: "HomeFilled",
-        roles: ["sys:manage"],
-      },
-      children: [],
-    },
-  ].concat(routerData.data);
+   menuList.value = JSON.parse(sessionStorage.getItem('menuList'))
+  // menuList.value = [
+  //   {
+  //     path: "/dashboard",
+  //     component: "Layout",
+  //     meta: {
+  //       title: "首页",
+  //       icon: "HomeFilled",
+  //       roles: ["sys:manage"],
+  //     },
+  //     children: [],
+  //   },
+  // ].concat(routerData.data);
   // console.log(menuList.value);
 });
 

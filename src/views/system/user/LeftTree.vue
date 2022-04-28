@@ -80,6 +80,7 @@
 <style lang="scss">
   .el-tree {
     font-size: 14px;
+    margin-top: 15px;
 
     .el-tree-node {
       position: relative;

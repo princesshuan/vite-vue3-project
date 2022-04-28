@@ -52,17 +52,16 @@ router.beforeEach(async (to) => {
     if (!token && to.path !== "/login") {
         return "/login";
     } else if (to.path !== "/login" && token) {
-        let currentRouter = router.getRoutes().filter((item) => item.path == to.path);
-        console.log(currentRouter[0].components, "currentRouter");
-        // debugger
-        if (currentRouter[0].components.default ==undefined) {
-          router.replace("/404");
-        }
         if (router.getRoutes().length == 4) {
             //动态添加路由
             let routerData: any = await getMenuList();
             routerData = filterAsyncRoutes(routerData.data, router);
+            sessionStorage.setItem("menuList", JSON.stringify(routerData));
             router.replace(to.path);
+        }
+        let currentRouter = router.getRoutes().filter((item) => item.path == to.path);
+        if (currentRouter[0].components.default == undefined) {
+          router.replace("/404");
         }
     } else if (to.path === "/login" && token) {
         return "/";

@@ -86,10 +86,11 @@ const onConfirm = () => {
     padding: 25px;
     .el-form--inline .el-form-item{
       margin-right: 10px;
-    }
-    .el-input {
+      .el-input {
       width: 200px;
+      }
     }
+    
   }
   .el-dialog__footer {
     border-top: 1px solid #e8eaec !important;

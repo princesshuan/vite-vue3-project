@@ -30,3 +30,11 @@ export interface AddUserModel {
   username: string;
   sex: string;
 }
+
+
+export interface AssignRoleListParm {
+  currentPage: number;
+  pageSize: number;
+  userId: string | number;
+  total: number;
+};

@@ -91,6 +91,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
           if (res.code == 200) {
             sessionStorage.setItem("userName", ruleForm.username);
             sessionStorage.setItem("token", res.token);
+            sessionStorage.setItem("userId", res.id);
             router.push({ path: "/" });
           }
           // console.log(res)
